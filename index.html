@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="hi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -3484,12 +3484,29 @@
       contentTypeMenu.style.maxHeight = "400px";
       contentTypeMenu.style.overflowY = "auto";
 
+      // Position after render so we get the actual height
       const menuW = 280;
-      const menuH = Math.min(allTypes.length * 34 + 100, 340);
-      const left = Math.min(event.clientX, window.innerWidth - menuW - 12);
-      const top = Math.min(event.clientY, window.innerHeight - menuH - 12);
-      contentTypeMenu.style.left = `${Math.max(8, left)}px`;
-      contentTypeMenu.style.top = `${Math.max(8, top)}px`;
+      const padding = 12;
+      let left = event.clientX;
+      let top = event.clientY;
+
+      // Adjust horizontally if overflowing right
+      if (left + menuW + padding > window.innerWidth) {
+        left = window.innerWidth - menuW - padding;
+      }
+      left = Math.max(padding, left);
+
+      contentTypeMenu.style.left = `${left}px`;
+      contentTypeMenu.style.top = `${top}px`;
+
+      // After paint, check actual height and flip up if overflowing bottom
+      requestAnimationFrame(() => {
+        const actualH = contentTypeMenu.offsetHeight;
+        if (top + actualH + padding > window.innerHeight) {
+          top = Math.max(padding, window.innerHeight - actualH - padding);
+          contentTypeMenu.style.top = `${top}px`;
+        }
+      });
     }
 
     function populateAllContentTypeSelects() {
