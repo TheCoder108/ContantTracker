@@ -1,6 +1,5 @@
-﻿<!DOCTYPE html>
-<html lang="en">
-<htm
+<!DOCTYPE html>
+<html lang="hi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -2709,7 +2708,7 @@
       white-space: nowrap;
     }
 
-    .content-type-menu button {
+    .content-type-menu button:not(.ct-menu-del):not(.ct-menu-add):not(.ct-menu-delete-row) {
       min-height: 34px;
       border: 1px solid rgba(180, 40, 40, 0.48);
       color: #ffb4a8;
@@ -2720,6 +2719,175 @@
     .content-type-menu button:disabled {
       cursor: not-allowed;
       opacity: 0.45;
+    }
+
+    /* Improved context menu items */
+    .ct-menu-title {
+      padding: 3px 6px 6px;
+      color: #d7a229;
+      font-size: 0.70rem;
+      font-weight: 900;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      border-bottom: 1px solid rgba(215, 162, 41, 0.22);
+      margin-bottom: 3px;
+    }
+
+    .ct-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 5px 5px;
+      border-radius: 5px;
+      transition: background 100ms;
+    }
+
+    .ct-menu-item:hover {
+      background: rgba(215, 162, 41, 0.12);
+    }
+
+    .ct-menu-item-name {
+      flex: 1;
+      min-width: 0;
+      max-width: 200px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      color: #f0dfa0;
+      font-size: 0.81rem;
+      font-weight: 700;
+    }
+
+    .ct-menu-del {
+      flex: 0 0 26px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      min-width: 26px;
+      height: 26px;
+      min-height: 26px;
+      padding: 0;
+      border: 1px solid #dc2626;
+      border-radius: 4px;
+      background: rgba(180, 20, 20, 0.70);
+      color: #fff;
+      font-size: 0.80rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: none;
+      transform: none;
+      transition: background 100ms;
+    }
+
+    .ct-menu-del:hover {
+      background: #dc2626;
+      color: #fff;
+    }
+
+    .ct-menu-hint {
+      padding: 4px 5px 2px;
+      border-top: 1px solid rgba(215, 162, 41, 0.18);
+      margin-top: 3px;
+      color: #9d8a5a;
+      font-size: 0.69rem;
+      font-weight: 700;
+    }
+
+    .ct-menu-add {
+      width: 100%;
+      min-height: 32px;
+      padding: 0 8px;
+      border: 1px solid rgba(215, 162, 41, 0.48);
+      border-radius: 6px;
+      background: rgba(215, 162, 41, 0.14);
+      color: #d7a229;
+      font: inherit;
+      font-size: 0.81rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: none;
+      text-align: left;
+      transition: background 120ms, border-color 120ms;
+    }
+
+    .ct-menu-add:hover {
+      background: rgba(215, 162, 41, 0.28);
+      border-color: rgba(215, 162, 41, 0.72);
+      color: #f0c040;
+    }
+
+    .ct-menu-delete-row {
+      width: 100%;
+      min-height: 32px !important;
+      padding: 0 8px !important;
+      border: 1px solid rgba(180, 40, 40, 0.55) !important;
+      border-radius: 6px;
+      background: rgba(100, 10, 10, 0.50) !important;
+      color: #ffb4a8 !important;
+      font: inherit;
+      font-size: 0.81rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: none !important;
+      transform: none !important;
+      text-align: left;
+      transition: background 120ms, border-color 120ms;
+    }
+
+    .ct-menu-delete-row:hover {
+      background: rgba(220, 38, 38, 0.72) !important;
+      border-color: #dc2626 !important;
+      color: #fff !important;
+    }
+
+    /* Toast */
+    .ct-toast {
+      position: fixed;
+      bottom: 26px;
+      left: 50%;
+      z-index: 99999;
+      transform: translateX(-50%) translateY(12px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 16px;
+      border: 1px solid rgba(215, 162, 41, 0.40);
+      border-radius: 10px;
+      background: rgba(10, 10, 10, 0.96);
+      color: #f5d58c;
+      font-size: 0.83rem;
+      font-weight: 800;
+      box-shadow: 0 14px 40px rgba(0, 0, 0, 0.55);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 200ms ease, transform 200ms ease;
+    }
+
+    .ct-toast.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    .ct-toast-undo {
+      padding: 3px 10px;
+      border: 1px solid rgba(215, 162, 41, 0.55);
+      border-radius: 5px;
+      background: rgba(215, 162, 41, 0.15);
+      color: #d7a229;
+      font: inherit;
+      font-size: 0.78rem;
+      font-weight: 900;
+      cursor: pointer;
+      min-height: unset;
+      box-shadow: none;
+      transition: background 120ms;
+    }
+
+    .ct-toast-undo:hover {
+      background: rgba(215, 162, 41, 0.32);
     }
 
     .fs-overlay {
@@ -2811,6 +2979,45 @@
     .remove-row {
       margin-inline: auto;
     }
+
+    /* Content type cell: select + manage button */
+    .content-type-wrap {
+      display: flex;
+      gap: 6px;
+      align-items: center;
+    }
+
+    .content-type-wrap select {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .ct-manage-btn {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 34px;
+      min-width: 34px;
+      height: 40px;
+      min-height: 40px;
+      padding: 0;
+      border: 1px solid rgba(215, 162, 41, 0.42);
+      border-radius: var(--radius);
+      background: rgba(215, 162, 41, 0.12);
+      color: #d7a229;
+      font-size: 1rem;
+      box-shadow: none;
+      cursor: pointer;
+      transition: background 120ms, border-color 120ms;
+    }
+
+    .ct-manage-btn:hover {
+      background: rgba(215, 162, 41, 0.28);
+      border-color: rgba(215, 162, 41, 0.72);
+      box-shadow: none;
+      transform: none;
+    }
   </style>
 </head>
 <body>
@@ -2900,7 +3107,10 @@
         <textarea data-field="videoTitle" placeholder="Video title"></textarea>
       </td>
       <td>
-        <select data-field="contentType"></select>
+        <div class="content-type-wrap">
+          <select data-field="contentType"></select>
+          <button type="button" class="ct-manage-btn" title="Manage content types (add / delete)">⚙</button>
+        </div>
       </td>
       <td>
         <div class="link-wrap">
@@ -2981,6 +3191,32 @@
     contentTypeMenu.className = "content-type-menu";
     document.body.appendChild(contentTypeMenu);
     let activeContentTypeSelect = null;
+
+    // ── Undo stack for deleted types ──────────────────────────────
+    const deletedTypeHistory = [];
+
+    // ── Toast ─────────────────────────────────────────────────────
+    const ctToast = document.createElement("div");
+    ctToast.className = "ct-toast";
+    document.body.appendChild(ctToast);
+    let _toastTimer = null;
+
+    function showToast(msg, withUndo = false) {
+      clearTimeout(_toastTimer);
+      ctToast.innerHTML = "";
+      const txt = document.createElement("span");
+      txt.textContent = msg;
+      ctToast.appendChild(txt);
+      if (withUndo) {
+        const btn = document.createElement("button");
+        btn.className = "ct-toast-undo";
+        btn.textContent = "↩ Undo (Ctrl+Z)";
+        btn.addEventListener("click", (e) => { e.stopPropagation(); undoDeleteContentType(); });
+        ctToast.appendChild(btn);
+      }
+      ctToast.classList.add("show");
+      _toastTimer = setTimeout(() => ctToast.classList.remove("show"), 4000);
+    }
 
     const starterRows = [
       {
@@ -3072,6 +3308,10 @@
     }
 
     function hideContentTypeMenu() {
+      if (!contentTypeMenu.classList.contains("show")) {
+        activeContentTypeSelect = null;
+        return;
+      }
       contentTypeMenu.classList.remove("show");
       contentTypeMenu.innerHTML = "";
       activeContentTypeSelect = null;
@@ -3081,18 +3321,29 @@
       const cleanType = String(type || "").trim();
       if (!cleanType || cleanType === addTypeValue) return;
 
-      customContentTypes = customContentTypes.filter((item) => item.toLowerCase() !== cleanType.toLowerCase());
+      // Save snapshot for undo
+      const wasCustom = customContentTypes.some((t) => t.toLowerCase() === cleanType.toLowerCase());
+      const wasDefault = defaultContentTypes.some((t) => t.toLowerCase() === cleanType.toLowerCase());
+      const affectedRowData = []; // store {row, oldValue}
+      getRows().forEach((row) => {
+        const sel = row.querySelector('[data-field="contentType"]');
+        if (sel && sel.value.toLowerCase() === cleanType.toLowerCase()) {
+          affectedRowData.push({ row, oldValue: sel.value });
+        }
+      });
+      deletedTypeHistory.push({ cleanType, wasCustom, wasDefault, affectedRowData });
 
-      if (defaultContentTypes.some((item) => item.toLowerCase() === cleanType.toLowerCase())) {
-        const alreadyHidden = hiddenContentTypes.some((item) => item.toLowerCase() === cleanType.toLowerCase());
-        if (!alreadyHidden) hiddenContentTypes.push(cleanType);
+      customContentTypes = customContentTypes.filter((t) => t.toLowerCase() !== cleanType.toLowerCase());
+
+      if (defaultContentTypes.some((t) => t.toLowerCase() === cleanType.toLowerCase())) {
+        if (!hiddenContentTypes.some((t) => t.toLowerCase() === cleanType.toLowerCase())) {
+          hiddenContentTypes.push(cleanType);
+        }
       }
 
       getRows().forEach((row) => {
-        const select = row.querySelector('[data-field="contentType"]');
-        if (select && select.value.toLowerCase() === cleanType.toLowerCase()) {
-          select.value = "";
-        }
+        const sel = row.querySelector('[data-field="contentType"]');
+        if (sel && sel.value.toLowerCase() === cleanType.toLowerCase()) sel.value = "";
       });
 
       saveCustomContentTypes();
@@ -3101,36 +3352,144 @@
       filterRows();
       saveRows();
       hideContentTypeMenu();
+      showToast(`"${cleanType}" deleted`, true);
+    }
+
+    function undoDeleteContentType() {
+      if (!deletedTypeHistory.length) {
+        showToast("Nothing to undo");
+        return;
+      }
+      const { cleanType, wasCustom, wasDefault, affectedRowData } = deletedTypeHistory.pop();
+
+      if (wasDefault) {
+        hiddenContentTypes = hiddenContentTypes.filter((t) => t.toLowerCase() !== cleanType.toLowerCase());
+        saveHiddenContentTypes();
+      } else if (wasCustom) {
+        if (!customContentTypes.some((t) => t.toLowerCase() === cleanType.toLowerCase())) {
+          customContentTypes.push(cleanType);
+          saveCustomContentTypes();
+        }
+      }
+
+      populateAllContentTypeSelects();
+
+      affectedRowData.forEach(({ row, oldValue }) => {
+        const sel = row.querySelector('[data-field="contentType"]');
+        if (sel) sel.value = oldValue;
+      });
+
+      filterRows();
+      saveRows();
+      showToast(`"${cleanType}" restored ✓`);
     }
 
     function showContentTypeMenu(select, event) {
       event.preventDefault();
+      event.stopPropagation();
       activeContentTypeSelect = select;
-      const value = select.value;
       contentTypeMenu.innerHTML = "";
 
-      const label = document.createElement("div");
-      label.className = "content-type-menu-label";
-      label.textContent = value && value !== addTypeValue ? value : "No type selected";
-      contentTypeMenu.appendChild(label);
+      const title = document.createElement("div");
+      title.className = "ct-menu-title";
+      title.textContent = "Manage Content Types";
+      contentTypeMenu.appendChild(title);
 
-      const deleteButton = document.createElement("button");
-      deleteButton.type = "button";
-      deleteButton.textContent = "Delete type";
-      deleteButton.disabled = !value || value === addTypeValue;
-      deleteButton.addEventListener("click", () => {
-        deleteContentType(activeContentTypeSelect.value);
+      // ── Add New Type button ────────────────────────────────────
+      const addBtn = document.createElement("button");
+      addBtn.type = "button";
+      addBtn.className = "ct-menu-add";
+      addBtn.textContent = "+ Add New Type";
+      addBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hideContentTypeMenu();
+        const customType = prompt("Enter new content type:");
+        if (!customType || !customType.trim()) return;
+        const cleanType = ensureContentType(customType.trim());
+        populateAllContentTypeSelects();
+        if (select) select.value = cleanType;
+        filterRows();
+        saveRows();
       });
-      contentTypeMenu.appendChild(deleteButton);
+      contentTypeMenu.appendChild(addBtn);
+
+      // ── Divider ───────────────────────────────────────────────
+      const allTypes = getContentTypes();
+      if (allTypes.length > 0) {
+        const div = document.createElement("div");
+        div.className = "ct-menu-hint";
+        div.style.cssText = "padding: 3px 5px; margin: 2px 0; font-size: 0.69rem; color: #9d8a5a; border-top: 1px solid rgba(215,162,41,0.18); border-bottom: none;";
+        div.textContent = "Or delete a type:";
+        contentTypeMenu.appendChild(div);
+
+        allTypes.forEach((type) => {
+          const item = document.createElement("div");
+          item.className = "ct-menu-item";
+
+          const name = document.createElement("span");
+          name.className = "ct-menu-item-name";
+          name.textContent = type;
+          name.title = type;
+
+          const del = document.createElement("div");
+          del.role = "button";
+          del.tabIndex = 0;
+          del.className = "ct-menu-del";
+          del.textContent = "✕";
+          del.title = `Delete: ${type}`;
+          del.addEventListener("click", (e) => {
+            e.stopPropagation();
+            deleteContentType(type);
+          });
+          del.addEventListener("keydown", (e) => {
+            if (e.key === "Enter" || e.key === " ") { e.preventDefault(); deleteContentType(type); }
+          });
+
+          item.appendChild(name);
+          item.appendChild(del);
+          contentTypeMenu.appendChild(item);
+        });
+      }
+
+      const hint = document.createElement("div");
+      hint.className = "ct-menu-hint";
+      hint.textContent = "Press Ctrl+Z to undo";
+      contentTypeMenu.appendChild(hint);
+
+      // ── Delete this Row ───────────────────────────────────────
+      const rowDivider = document.createElement("div");
+      rowDivider.style.cssText = "border-top: 1px solid rgba(215,162,41,0.22); margin: 4px 0;";
+      contentTypeMenu.appendChild(rowDivider);
+
+      const deleteRowBtn = document.createElement("button");
+      deleteRowBtn.type = "button";
+      deleteRowBtn.className = "ct-menu-delete-row";
+      deleteRowBtn.textContent = "🗑 Delete this Row";
+      deleteRowBtn.addEventListener("click", (e) => {
+        e.stopPropagation();
+        hideContentTypeMenu();
+        const row = select ? select.closest("tr") : null;
+        if (!row) return;
+        if (confirm("Delete this row?")) {
+          row.remove();
+          if (getRows().length === 0) addRow();
+          filterRows();
+          saveRows();
+        }
+      });
+      contentTypeMenu.appendChild(deleteRowBtn);
 
       contentTypeMenu.classList.add("show");
+      contentTypeMenu.style.width = "280px";
+      contentTypeMenu.style.maxHeight = "400px";
+      contentTypeMenu.style.overflowY = "auto";
 
-      const menuWidth = 190;
-      const menuHeight = 90;
-      const left = Math.min(event.clientX, window.innerWidth - menuWidth - 12);
-      const top = Math.min(event.clientY, window.innerHeight - menuHeight - 12);
-      contentTypeMenu.style.left = `${Math.max(12, left)}px`;
-      contentTypeMenu.style.top = `${Math.max(12, top)}px`;
+      const menuW = 280;
+      const menuH = Math.min(allTypes.length * 34 + 100, 340);
+      const left = Math.min(event.clientX, window.innerWidth - menuW - 12);
+      const top = Math.min(event.clientY, window.innerHeight - menuH - 12);
+      contentTypeMenu.style.left = `${Math.max(8, left)}px`;
+      contentTypeMenu.style.top = `${Math.max(8, top)}px`;
     }
 
     function populateAllContentTypeSelects() {
@@ -3249,7 +3608,10 @@
       const completed = rows.filter((row) => row.dataset.status === "completed").length;
       const completion = rows.length ? Math.round((completed / rows.length) * 100) : 0;
 
-      totalCount.textContent = `${rows.length} Total`;
+      const isFiltered = visibleRows.length !== rows.length;
+      totalCount.textContent = isFiltered
+        ? `${visibleRows.length} / ${rows.length} Total`
+        : `${rows.length} Total`;
       processCount.textContent = `${underProcess} Under Process`;
       completeCount.textContent = `${completed} Completed`;
       completionRate.textContent = `${completion}%`;
@@ -3340,7 +3702,6 @@
       const preview = row.querySelector(".thumb-preview");
       const url = normaliseUrl(input.value);
 
-      preview.textContent = "";
       preview.innerHTML = "";
 
       if (!url) {
@@ -3357,6 +3718,8 @@
         const errorText = document.createElement("span");
         errorText.textContent = "Image not found";
         preview.appendChild(errorText);
+        // Remove has-thumbnail so the URL/file inputs reappear
+        row.querySelector(".thumb-control").classList.remove("has-thumbnail");
         addThumbnailRemoveButton(preview);
       };
       preview.appendChild(img);
@@ -3369,11 +3732,7 @@
     }
 
     function attachRowEvents(row) {
-      row.addEventListener("contextmenu", (event) => {
-        const contentTypeSelect = event.target.closest('[data-field="contentType"]');
-        if (!contentTypeSelect) return;
-        showContentTypeMenu(contentTypeSelect, event);
-      });
+      // contextmenu is handled at document level (see bottom of script)
 
       row.addEventListener("click", (event) => {
         if (event.target.closest(".thumb-remove") || event.target.closest(".thumb-rm")) {
@@ -3434,7 +3793,14 @@
 
         if (field.dataset.field === "contentType" && field.value === addTypeValue) {
           const customType = prompt("Add new content type");
-          const cleanType = ensureContentType(customType);
+          if (!customType || !customType.trim()) {
+            // User cancelled – reset the select back to the placeholder
+            field.value = "";
+            filterRows();
+            saveRows();
+            return;
+          }
+          const cleanType = ensureContentType(customType.trim());
 
           populateAllContentTypeSelects();
           field.value = cleanType;
@@ -3446,6 +3812,13 @@
 
         filterRows();
         saveRows();
+      });
+
+      row.querySelector(".ct-manage-btn").addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopPropagation();
+        const sel = row.querySelector('[data-field="contentType"]');
+        showContentTypeMenu(sel, event);
       });
 
       row.querySelector(".remove-row").addEventListener("click", () => {
@@ -3556,7 +3929,7 @@
       link.href = url;
       link.download = "video-tracker.csv";
       link.click();
-      URL.revokeObjectURL(url);
+      setTimeout(() => URL.revokeObjectURL(url), 10000);
     }
 
     addRowBtn.addEventListener("click", () => {
@@ -3597,15 +3970,40 @@
     });
 
     window.addEventListener("resize", syncTopScrollbarSize);
-    document.addEventListener("click", (event) => {
+    // Document-level right-click → show type delete menu on contentType selects
+    document.addEventListener("contextmenu", (event) => {
+      const sel = event.target.closest('[data-field="contentType"]');
+      if (sel) {
+        showContentTypeMenu(sel, event);
+        return;
+      }
+      // Close menu on right-click elsewhere
       if (!event.target.closest(".content-type-menu")) {
         hideContentTypeMenu();
       }
     });
-    window.addEventListener("scroll", hideContentTypeMenu, true);
+
+    document.addEventListener("click", (event) => {
+      // Don't interfere with native select dropdown interactions
+      if (event.target.closest('[data-field="contentType"]')) return;
+      // Don't close when clicking the manage button (it handles itself)
+      if (event.target.closest(".ct-manage-btn")) return;
+      if (!event.target.closest(".content-type-menu")) {
+        hideContentTypeMenu();
+      }
+    });
+    // Only close on window (page) scroll, not on the table's horizontal scroll
+    window.addEventListener("scroll", hideContentTypeMenu, { passive: true });
     window.addEventListener("keydown", (event) => {
       if (event.key === "Escape") {
         hideContentTypeMenu();
+      }
+      // Ctrl+Z / Cmd+Z — undo last type deletion
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "z") {
+        if (deletedTypeHistory.length > 0) {
+          event.preventDefault();
+          undoDeleteContentType();
+        }
       }
     });
 
