@@ -2854,7 +2854,10 @@
       <div class="actions">
         <button id="addRowBtn" type="button">Add Row</button>
         <button id="exportBtn" class="secondary" type="button">Export CSV</button>
+        <button id="backupBtn" class="secondary" type="button">Backup Data</button>
+        <button id="restoreBtn" class="secondary" type="button">Restore Data</button>
         <button id="clearBtn" class="secondary" type="button">Clear</button>
+        <input id="restoreInput" type="file" accept="application/json,.json" hidden>
       </div>
     </section>
 
@@ -2964,6 +2967,9 @@
     const addRowBtn = document.getElementById("addRowBtn");
     const clearBtn = document.getElementById("clearBtn");
     const exportBtn = document.getElementById("exportBtn");
+    const backupBtn = document.getElementById("backupBtn");
+    const restoreBtn = document.getElementById("restoreBtn");
+    const restoreInput = document.getElementById("restoreInput");
     const searchInput = document.getElementById("searchInput");
     const emptyState = document.getElementById("emptyState");
     const totalCount = document.getElementById("totalCount");
@@ -3155,6 +3161,78 @@
       const rows = getRows().map(readRow);
       localStorage.setItem(storageKey, JSON.stringify(rows));
       updateStats();
+    }
+
+    function getBackupPayload() {
+      return {
+        app: "Warriorov Content Tracker",
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        rows: getRows().map(readRow),
+        customContentTypes,
+        hiddenContentTypes
+      };
+    }
+
+    function downloadBlob(filename, blob) {
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    function backupData() {
+      const payload = getBackupPayload();
+      const date = new Date().toISOString().slice(0, 10);
+      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: "application/json;charset=utf-8" });
+      downloadBlob(`content-tracker-backup-${date}.json`, blob);
+    }
+
+    function restoreDataFromBackup(payload) {
+      if (!payload || !Array.isArray(payload.rows)) {
+        alert("Invalid backup file.");
+        return;
+      }
+
+      const ok = confirm("Restore backup? Current browser data will be replaced.");
+      if (!ok) return;
+
+      customContentTypes = Array.isArray(payload.customContentTypes) ? payload.customContentTypes.filter(Boolean) : [];
+      hiddenContentTypes = Array.isArray(payload.hiddenContentTypes) ? payload.hiddenContentTypes.filter(Boolean) : [];
+      saveCustomContentTypes();
+      saveHiddenContentTypes();
+
+      trackerBody.innerHTML = "";
+      payload.rows.forEach((row) => addRow(row));
+
+      if (getRows().length === 0) {
+        addRow();
+      }
+
+      localStorage.setItem(storageKey, JSON.stringify(getRows().map(readRow)));
+      filterRows();
+      saveRows();
+      requestAnimationFrame(syncTopScrollbarSize);
+    }
+
+    function restoreData(file) {
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        try {
+          restoreDataFromBackup(JSON.parse(reader.result));
+        } catch {
+          alert("Backup file could not be read.");
+        } finally {
+          restoreInput.value = "";
+        }
+      };
+      reader.readAsText(file);
     }
 
     function syncTopScrollbarSize() {
@@ -3497,6 +3575,9 @@
     });
 
     exportBtn.addEventListener("click", exportCsv);
+    backupBtn.addEventListener("click", backupData);
+    restoreBtn.addEventListener("click", () => restoreInput.click());
+    restoreInput.addEventListener("change", () => restoreData(restoreInput.files[0]));
     searchInput.addEventListener("input", filterRows);
 
     let isSyncingScroll = false;
